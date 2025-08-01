@@ -9,14 +9,8 @@
 #define INC_GPIO_HANDLER_H_
 
 
-typedef struct
-{
-	bool led_can_activity_disable;
-	bool led_soh_disable;
-}GPIO_t;
-
-void LED_SOH_Toggle(void);
-void LED_CAN_Activity(void);
+void LED_Green_Toggle(void);
+void LED_Blue_Toggle(void);
 
 
 #endif /* INC_GPIO_HANDLER_H_ */

@@ -36,7 +36,6 @@
 
 const char* Hardware = "P_CAN 0.7e";
 const char* Version = "CANable v3.0.1"; // FW version
-const char* Frequency = "APB1_48mHz";// this is the APB1 clock frequency for this device
 
 
 #define CAN_RX_QUEUE_SIZE 8
@@ -67,14 +66,13 @@ USB_MsgStruct usb_msg =
 	.tx.queueSize = USB_QUEUE_SIZE
 };
 
-GPIO_t gpio_status = {0};
-
 void PollingInit(void)
 {
 	CAN_SetFilter(&can_msg);
 
-	TimerCallbackRegisterOnly(&timerCallback, LED_SOH_Toggle);
-	TimerCallbackTimerStart(&timerCallback, LED_SOH_Toggle, 500, TIMER_REPEAT);
+	// blink the green LED 3 times to indicate it is up and running.
+	TimerCallbackRegisterOnly(&timerCallback, LED_Green_Toggle);
+	TimerCallbackRepetitionStart(&timerCallback, LED_Green_Toggle, 500, 6);
 }
 
 void PollingRoutine(void)
@@ -103,7 +101,7 @@ void USB_Parse(USB_MsgStruct *msg)
 			USB_to_CAN_Send(&can_msg, msg->rx.msgToParse->Status.data);
 			break;
 		case CMD_BAUD:
-			status = CAN_BaudRate(&can_msg, msg->rx.msgToParse->Status.data);
+			status = CAN_BTR_Set(&can_msg, msg->rx.msgToParse->Status.data);
 			break;
 		case CMD_HARDWARE:
 			SendStringInfo(CMD_HARDWARE, (char*)Hardware);
@@ -112,33 +110,13 @@ void USB_Parse(USB_MsgStruct *msg)
 			SendStringInfo(CMD_VERSION, (char*)Version);
 			break;
 		case CMD_FREQUENCY:
-			SendStringInfo(CMD_FREQUENCY, (char*)Frequency);
+			APB1_Frequency_Get();
 			break;
 		case CMD_CAN_BTR:
-			Send_CAN_BTR(&can_msg);
+			CAN_BTR_Get(&can_msg);
 			break;
 		case CMD_CAN_MODE:
-			status = CAN_Set_CAN_Mode(msg->rx.msgToParse->Status.data);
-			break;
-		case CMD_CAN_ACTIVITY_LED:
-			if(msg->rx.msgToParse->Status.data[0] == 0x01)
-			{
-				gpio_status.led_can_activity_disable = true;
-			}
-			else
-			{
-				gpio_status.led_can_activity_disable = false;
-			}
-			break;
-		case CMD_SOH_ACTIVITY_LED:
-			if(msg->rx.msgToParse->Status.data[0])
-			{
-				TimerCallbackDisable(&timerCallback, LED_SOH_Toggle);
-			}
-			else
-			{
-				TimerCallbackTimerStart(&timerCallback, LED_SOH_Toggle, 500, TIMER_REPEAT);
-			}
+			status = CAN_Mode_Set(msg->rx.msgToParse->Status.data);
 			break;
 		default:
 			status = 1;
@@ -170,20 +148,7 @@ void CAN_Parse(CAN_MsgStruct *msg)
 	}
 }
 
-void SendStringInfo(uint8_t cmd, char *msg)
-{
-	USB_Data_t usb_data = {0};
-
-	sprintf((char*)usb_data.Status.data, msg);
-	strcat((char*)usb_data.Status.data, "\r\n");
-
-	usb_data.Status.id = cmd;
-	usb_data.Status.size = strlen((char*)usb_data.Status.data);
-
-	USB_AddTxBuffer(&usb_msg, &usb_data);
-}
-
-void Send_CAN_BTR(CAN_MsgStruct *msg)
+void CAN_BTR_Get(CAN_MsgStruct *msg)
 {
 	USB_Data_t usb_data = {0};
 	uint32_t btrValue = READ_REG(msg->hcan->Instance->BTR);
@@ -199,7 +164,17 @@ void Send_CAN_BTR(CAN_MsgStruct *msg)
 	USB_AddTxBuffer(&usb_msg, &usb_data);
 }
 
-int CAN_BaudRate(CAN_MsgStruct *msg, uint8_t *data)
+void APB1_Frequency_Get(void)
+{
+	uint32_t freq;
+	char str[16] = {0};
+	freq = HAL_RCC_GetPCLK1Freq();
+
+	sprintf(str, "APB1 %ld", freq);
+	SendStringInfo(CMD_FREQUENCY, str);
+}
+
+int CAN_BTR_Set(CAN_MsgStruct *msg, uint8_t *data)
 {
 	HAL_StatusTypeDef hal_status;
 	uint32_t btrValue = 0;
@@ -228,3 +203,17 @@ int CAN_BaudRate(CAN_MsgStruct *msg, uint8_t *data)
 
 	return hal_status;
 }
+
+void SendStringInfo(uint8_t cmd, char *msg)
+{
+	USB_Data_t usb_data = {0};
+
+	sprintf((char*)usb_data.Status.data, msg);
+	strcat((char*)usb_data.Status.data, "\r\n");
+
+	usb_data.Status.id = cmd;
+	usb_data.Status.size = strlen((char*)usb_data.Status.data);
+
+	USB_AddTxBuffer(&usb_msg, &usb_data);
+}
+

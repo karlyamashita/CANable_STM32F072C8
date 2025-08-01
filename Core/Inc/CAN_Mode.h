@@ -8,6 +8,6 @@
 #ifndef INC_CAN_MODE_H_
 #define INC_CAN_MODE_H_
 
-int CAN_Set_CAN_Mode(uint8_t *data);
+int CAN_Mode_Set(uint8_t *data);
 
 #endif /* INC_CAN_MODE_H_ */

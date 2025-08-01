@@ -21,11 +21,7 @@ void HAL_CAN_RxFifo0MsgPendingCallback(CAN_HandleTypeDef *hcan)
 		if(hal_status == HAL_OK)
 		{
 			RingBuff_Ptr_Input(&can_msg.rxPtr, can_msg.rxQueueSize);
-			// TODO - toggle CAN activity LED
-		}
-		if(!gpio_status.led_can_activity_disable)
-		{
-			LED_CAN_Activity();
+			LED_Blue_Toggle();
 		}
 	}
 }
@@ -34,6 +30,7 @@ void HAL_CAN_TxMailbox0CompleteCallback(CAN_HandleTypeDef *hcan)
 {
 	if(hcan == can_msg.hcan)
 	{
+		LED_Green_Toggle();
 		CAN_SendMessage(&can_msg);
 	}
 }

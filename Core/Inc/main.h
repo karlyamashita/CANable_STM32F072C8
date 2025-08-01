@@ -59,7 +59,6 @@ extern CAN_HandleTypeDef hcan;
 extern TimerCallbackStruct timerCallback;
 extern USB_MsgStruct usb_msg;
 extern CAN_MsgStruct can_msg;
-extern GPIO_t gpio_status;
 
 /* USER CODE END Includes */
 

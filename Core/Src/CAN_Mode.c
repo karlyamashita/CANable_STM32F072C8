@@ -8,7 +8,7 @@
 
 #include "main.h"
 
-int CAN_Set_CAN_Mode(uint8_t *data)
+int CAN_Mode_Set(uint8_t *data)
 {
 	HAL_StatusTypeDef hal_status;
 	uint32_t mode;

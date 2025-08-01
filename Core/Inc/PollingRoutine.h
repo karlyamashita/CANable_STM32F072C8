@@ -44,9 +44,9 @@ void PollingRoutine(void);
 void USB_Parse(USB_MsgStruct *msg) ;
 void CAN_Parse(CAN_MsgStruct *msg);
 
-void Send_CAN_BTR(CAN_MsgStruct *hcan);
-int CAN_BaudRate(CAN_MsgStruct *hcan, uint8_t *data);
-
+void CAN_BTR_Get(CAN_MsgStruct *hcan);
+int CAN_BTR_Set(CAN_MsgStruct *hcan, uint8_t *data);
+void APB1_Frequency_Get(void);
 void SendStringInfo(uint8_t cmd, char *msg);
 
 #endif /* INC_POLLINGROUTINE_H_ */

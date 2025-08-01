@@ -8,13 +8,14 @@
 
 #include "main.h"
 
-
-void LED_SOH_Toggle(void)
+// TX
+void LED_Green_Toggle(void)
 {
 	HAL_GPIO_TogglePin(LED_0_GPIO_Port, LED_0_Pin);
 }
 
-void LED_CAN_Activity(void)
+// RX
+void LED_Blue_Toggle(void)
 {
 	HAL_GPIO_TogglePin(LED_1_GPIO_Port, LED_1_Pin);
 }
