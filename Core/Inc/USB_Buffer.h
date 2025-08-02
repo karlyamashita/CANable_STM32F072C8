@@ -24,19 +24,15 @@ typedef union
 
 typedef struct
 {
-	struct
-	{
-		USB_Data_t *queue;
-		USB_Data_t *msgToParse;
-		uint32_t queueSize;
-		RING_BUFF_STRUCT ptr;
-	}rx;
-	struct
-	{
-		USB_Data_t *queue;
-		uint32_t queueSize;
-		RING_BUFF_STRUCT ptr;
-	}tx;
+	// rx
+	USB_Data_t *rxQueue;
+	USB_Data_t *msgToParse;
+	uint32_t rxQueueSize;
+	RING_BUFF_STRUCT rxPtr;
+	// tx
+	USB_Data_t *txQueue;
+	uint32_t txQueueSize;
+	RING_BUFF_STRUCT txPtr;
 }USB_MsgStruct;
 
 

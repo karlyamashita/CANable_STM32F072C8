@@ -60,10 +60,10 @@ USB_Data_t usbTxQueue[USB_QUEUE_SIZE] = {0};
 
 USB_MsgStruct usb_msg =
 {
-	.rx.queue = usbRxQueue,
-	.rx.queueSize = USB_QUEUE_SIZE,
-	.tx.queue = usbTxQueue,
-	.tx.queueSize = USB_QUEUE_SIZE
+	.rxQueue = usbRxQueue,
+	.rxQueueSize = USB_QUEUE_SIZE,
+	.txQueue = usbTxQueue,
+	.txQueueSize = USB_QUEUE_SIZE
 };
 
 void PollingInit(void)
@@ -95,13 +95,13 @@ void USB_Parse(USB_MsgStruct *msg)
 
 	if(USB_DataAvailable(msg))
 	{
-		switch(msg->rx.msgToParse->Status.id)
+		switch(msg->msgToParse->Status.id)
 		{
 		case CMD_MESSAGE:
-			USB_to_CAN_Send(&can_msg, msg->rx.msgToParse->Status.data);
+			USB_to_CAN_Send(&can_msg, msg->msgToParse->Status.data);
 			break;
 		case CMD_BAUD:
-			status = CAN_BTR_Set(&can_msg, msg->rx.msgToParse->Status.data);
+			status = CAN_BTR_Set(&can_msg, msg->msgToParse->Status.data);
 			break;
 		case CMD_HARDWARE:
 			SendStringInfo(CMD_HARDWARE, (char*)Hardware);
@@ -116,7 +116,7 @@ void USB_Parse(USB_MsgStruct *msg)
 			CAN_BTR_Get(&can_msg);
 			break;
 		case CMD_CAN_MODE:
-			status = CAN_Mode_Set(msg->rx.msgToParse->Status.data);
+			status = CAN_Mode_Set(msg->msgToParse->Status.data);
 			break;
 		default:
 			status = 1;

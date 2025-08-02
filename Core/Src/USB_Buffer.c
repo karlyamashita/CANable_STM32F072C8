@@ -8,15 +8,15 @@ int USB_SendMessage(USB_MsgStruct *msg)
 {
 	uint8_t USB_Status = USBD_OK;
 
-	if(msg->tx.ptr.cnt_Handle) // send available message
+	if(msg->txPtr.cnt_Handle) // send available message
 	{
-		USB_Status = CDC_Transmit_FS(msg->tx.queue[msg->tx.ptr.index_OUT].Byte.data, ID_AND_SIZE_LENGTH + msg->tx.queue[msg->tx.ptr.index_OUT].Status.size);
+		USB_Status = CDC_Transmit_FS(msg->txQueue[msg->txPtr.index_OUT].Byte.data, ID_AND_SIZE_LENGTH + msg->txQueue[msg->txPtr.index_OUT].Status.size);
 		if (USB_Status == USBD_OK) // make sure data was sent before incrementing pointer
 		{
-			RingBuff_Ptr_Output(&msg->tx.ptr, msg->tx.queueSize); // increment output buffer ptr
+			RingBuff_Ptr_Output(&msg->txPtr, msg->txQueueSize); // increment output buffer ptr
 		}
 	}
-	return msg->tx.ptr.cnt_Handle; // if no more message to handle then 0 will be returned
+	return msg->txPtr.cnt_Handle; // if no more message to handle then 0 will be returned
 }
 
 // adds data to USB Tx buffer
@@ -24,13 +24,13 @@ void USB_AddTxBuffer(USB_MsgStruct *msg, USB_Data_t *data)
 {
 	int i = 0;
 
-	memset(&msg->tx.queue[msg->tx.ptr.index_IN], 0, sizeof(msg->tx.queue[msg->tx.ptr.index_IN]));
+	memset(&msg->txQueue[msg->txPtr.index_IN], 0, sizeof(msg->txQueue[msg->txPtr.index_IN]));
 	for(i = 0; i < (ID_AND_SIZE_LENGTH + data->Status.size); i++)
 	{
-		msg->tx.queue[msg->tx.ptr.index_IN].Byte.data[i] = data->Byte.data[i];
+		msg->txQueue[msg->txPtr.index_IN].Byte.data[i] = data->Byte.data[i];
 	}
-	msg->tx.queue[msg->tx.ptr.index_IN].Status.size = data->Status.size;
-	RingBuff_Ptr_Input(&msg->tx.ptr, msg->tx.queueSize);
+	msg->txQueue[msg->txPtr.index_IN].Status.size = data->Status.size;
+	RingBuff_Ptr_Input(&msg->txPtr, msg->txQueueSize);
 }
 
 // add data to USB Rx buffer
@@ -38,15 +38,15 @@ void USB_AddRxBuffer(USB_MsgStruct *msg, uint8_t *data, uint32_t size)
 {
 	int i = 0;
 
-	memset(&msg->rx.queue[msg->rx.ptr.index_IN], 0, sizeof(msg->rx.queue[msg->rx.ptr.index_IN]));
+	memset(&msg->rxQueue[msg->rxPtr.index_IN], 0, sizeof(msg->rxQueue[msg->rxPtr.index_IN]));
 	for(i = 0; i < size; i++)
 	{
-		msg->rx.queue[msg->rx.ptr.index_IN].Byte.data[i] = data[i];
+		msg->rxQueue[msg->rxPtr.index_IN].Byte.data[i] = data[i];
 	}
 
-	msg->rx.queue[msg->rx.ptr.index_IN].Status.size = size;
+	msg->rxQueue[msg->rxPtr.index_IN].Status.size = size;
 
-	RingBuff_Ptr_Input(&msg->rx.ptr, msg->rx.queueSize);
+	RingBuff_Ptr_Input(&msg->rxPtr, msg->rxQueueSize);
 }
 
 /*
@@ -56,10 +56,10 @@ void USB_AddRxBuffer(USB_MsgStruct *msg, uint8_t *data, uint32_t size)
  */
 uint8_t USB_DataAvailable(USB_MsgStruct *msg)
 {
-	if(msg->rx.ptr.cnt_Handle)
+	if(msg->rxPtr.cnt_Handle)
 	{
-		msg->rx.msgToParse = &msg->rx.queue[msg->rx.ptr.index_OUT];
-		RingBuff_Ptr_Output(&msg->rx.ptr, msg->rx.queueSize);
+		msg->msgToParse = &msg->rxQueue[msg->rxPtr.index_OUT];
+		RingBuff_Ptr_Output(&msg->rxPtr, msg->rxQueueSize);
 		return 1;
 	}
 
