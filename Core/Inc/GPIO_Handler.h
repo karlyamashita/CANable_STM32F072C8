@@ -11,6 +11,7 @@
 
 void LED_Green_Toggle(void);
 void LED_Blue_Toggle(void);
-
+void LED_Green(bool state);
+void LED_Blue(bool state);
 
 #endif /* INC_GPIO_HANDLER_H_ */

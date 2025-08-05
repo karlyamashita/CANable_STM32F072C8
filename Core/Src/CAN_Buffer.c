@@ -3,7 +3,7 @@
 #include "main.h"
 
 
-HAL_StatusTypeDef CAN_Status; // make it global for debugger window
+HAL_StatusTypeDef can_status; // make it global for debugger window
 /*
  * Description: Send available Tx queue
  */
@@ -15,8 +15,8 @@ int CAN_SendMessage(CAN_MsgStruct *msg)
 	if(msg->txPtr.cnt_Handle) // send available message
 	{
 		ptr = &msg->txQueue[msg->txPtr.index_OUT];
-		CAN_Status = HAL_CAN_AddTxMessage(msg->hcan, &ptr->header, ptr->data, &CAN_Tx_Mailboxes);
-		if (CAN_Status == HAL_OK)
+		can_status = HAL_CAN_AddTxMessage(msg->hcan, &ptr->header, ptr->data, &CAN_Tx_Mailboxes);
+		if (can_status == HAL_OK)
 		{
 			RingBuff_Ptr_Output(&msg->txPtr, msg->txQueueSize); // increment queue ptr
 		}

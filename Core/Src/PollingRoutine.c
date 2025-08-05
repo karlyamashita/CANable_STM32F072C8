@@ -34,7 +34,13 @@
 #include "main.h"
 
 
+
+#ifdef FYSETC_UCAN
+const char* Hardware = "FYSETC UCAN";
+#endif
+#ifdef P_CAN_07e
 const char* Hardware = "P_CAN 0.7e";
+#endif
 const char* Version = "CANable v3.0.1"; // FW version
 
 
@@ -73,6 +79,10 @@ void PollingInit(void)
 	// blink the green LED 3 times to indicate it is up and running.
 	TimerCallbackRegisterOnly(&timerCallback, LED_Green_Toggle);
 	TimerCallbackRepetitionStart(&timerCallback, LED_Green_Toggle, 500, 6);
+#ifdef P_CAN_07e
+	LED_Green(false);
+	LED_Blue(false);
+#endif
 }
 
 void PollingRoutine(void)
