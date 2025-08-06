@@ -1,0 +1,101 @@
+VERSION
+8
+
+COMMSETTINGS
+0
+COM20
+COM6
+115200
+2
+63
+4
+0
+0
+
+COMMDISPLAY
+0
+
+VERSATAP
+0
+
+CHANNELALIAS
+
+
+
+SEND
+0
+
+80 00 00 11 00 00 00 00 01 01 00 00 08 01 02 03 04 05 06 07 08
+0
+.1
+
+SEND
+1
+
+80 00 00 11 00 00 00 00 01 01 00 00 08 11 22 33 44 55 66 77 88
+0
+.01
+
+SEND
+2
+
+80 00 00 11 00 00 00 00 02 01 00 00 08 10 20 30 40 50 60 70 80
+0
+.01
+
+SEND
+3
+CAN BTR
+91
+0
+5
+
+SEND
+4
+Version
+92
+0
+.01
+
+SEND
+5
+Hardware
+93
+0
+5
+
+SEND
+6
+Frequency
+94
+0
+5
+
+SEND
+7
+CAN Mode Normal
+30 00 00 00 00
+0
+5
+
+SEND
+8
+CAN Mode Loopback
+30 00 00 00 01
+0
+5
+
+SEND
+9
+CAN Mode Silent
+30 00 00 00 02
+0
+5
+
+SEND
+10
+CAN Mode Silent + Loopback
+30 00 00 00 03
+0
+5
+

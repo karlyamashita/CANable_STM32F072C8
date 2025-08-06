@@ -22,7 +22,6 @@ void HAL_CAN_RxFifo0MsgPendingCallback(CAN_HandleTypeDef *hcan)
 		{
 			RingBuff_Ptr_Input(&can_msg.rxPtr, can_msg.rxQueueSize);
 			TimerCallbackRepetitionStart(&timerCallback, LED_Blue_Toggle, 20, 2); // blip LED
-
 		}
 	}
 }
