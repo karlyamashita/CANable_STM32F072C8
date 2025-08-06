@@ -8,7 +8,9 @@
 CANable_STM32F072C8 CAN bus interface source code for use with STM32F072C8. The code works with the following adapters
 * P_CAN 0.7e
 * FYSETC
-    * https://www.aliexpress.us/item/3256804696807148.html?gatewayAdapt=glo2usa4itemAdapt&_randl_shipto=US.
+    * https://www.aliexpress.us/item/3256804696807148.html
+* CANAble V1.0 Pro
+    * https://www.aliexpress.us/item/3256808639155688.html
 
 ---
 
