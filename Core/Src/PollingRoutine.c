@@ -41,6 +41,9 @@ const char* Hardware = "FYSETC UCAN";
 #ifdef P_CAN_07e
 const char* Hardware = "P_CAN 0.7e";
 #endif
+#ifdef CANABLE_V1_0_PRO
+const char* Hardware = "CANable V1.0 Pro";
+#endif
 const char* Version = "CANable v3.0.1"; // FW version
 
 
@@ -79,7 +82,11 @@ void PollingInit(void)
 	// blink the green LED 3 times to indicate it is up and running.
 	TimerCallbackRegisterOnly(&timerCallback, LED_Green_Toggle);
 	TimerCallbackRepetitionStart(&timerCallback, LED_Green_Toggle, 500, 6);
-#ifdef P_CAN_07e
+	TimerCallbackRegister2nd(&timerCallback, LED_Blue_Toggle, LED_Green_Off); // be sure LED goes to off state
+
+	TimerCallbackRegisterOnly(&timerCallback, LED_Blue_Toggle);
+	TimerCallbackRegister2nd(&timerCallback, LED_Blue_Toggle, LED_Blue_Off); // be sure LED goes to off state
+#if defined (P_CAN_07e) || defined (CANABLE_V1_0_PRO)
 	LED_Green(false);
 	LED_Blue(false);
 #endif

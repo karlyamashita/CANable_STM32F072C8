@@ -21,7 +21,8 @@ void HAL_CAN_RxFifo0MsgPendingCallback(CAN_HandleTypeDef *hcan)
 		if(hal_status == HAL_OK)
 		{
 			RingBuff_Ptr_Input(&can_msg.rxPtr, can_msg.rxQueueSize);
-			LED_Blue_Toggle();
+			TimerCallbackRepetitionStart(&timerCallback, LED_Blue_Toggle, 20, 2); // blip LED
+
 		}
 	}
 }
@@ -30,7 +31,7 @@ void HAL_CAN_TxMailbox0CompleteCallback(CAN_HandleTypeDef *hcan)
 {
 	if(hcan == can_msg.hcan)
 	{
-		LED_Green_Toggle();
+		TimerCallbackRepetitionStart(&timerCallback, LED_Green_Toggle, 20, 2); // blip LED
 		CAN_SendMessage(&can_msg);
 	}
 }

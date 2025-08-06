@@ -22,7 +22,7 @@ void LED_Blue_Toggle(void)
 
 void LED_Green(bool state)
 {
-#ifdef P_CAN_07e
+#if defined (P_CAN_07e) || defined (CANABLE_V1_0_PRO)
 	if(state)
 	{
 		HAL_GPIO_WritePin(LED_0_GPIO_Port, LED_0_Pin, GPIO_PIN_RESET); // On
@@ -36,7 +36,7 @@ void LED_Green(bool state)
 
 void LED_Blue(bool state)
 {
-#ifdef P_CAN_07e
+#if defined (P_CAN_07e) || defined (CANABLE_V1_0_PRO)
 	if(state)
 	{
 		HAL_GPIO_WritePin(LED_1_GPIO_Port, LED_1_Pin, GPIO_PIN_RESET); // On
@@ -47,3 +47,23 @@ void LED_Blue(bool state)
 	}
 #endif
 }
+
+void LED_Green_Off(void)
+{
+#if defined (P_CAN_07e) || defined (CANABLE_V1_0_PRO)
+	HAL_GPIO_WritePin(LED_0_GPIO_Port, LED_0_Pin, GPIO_PIN_SET); // Off
+#else
+	HAL_GPIO_WritePin(LED_0_GPIO_Port, LED_0_Pin, GPIO_PIN_RESET); // Off
+#endif
+}
+
+void LED_Blue_Off(void)
+{
+#if defined (P_CAN_07e) || defined (CANABLE_V1_0_PRO)
+	HAL_GPIO_WritePin(LED_1_GPIO_Port, LED_1_Pin, GPIO_PIN_SET); // Off
+#else
+	HAL_GPIO_WritePin(LED_1_GPIO_Port, LED_1_Pin, GPIO_PIN_RESET); // Off
+#endif
+}
+
+
