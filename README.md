@@ -1,4 +1,4 @@
-# CANable_STM32F072C8 CAN bus interface
+## CANable_STM32F072C8 CAN bus interface
 > [!NOTE]This CANable_STM32F072C8 interface project is based off my original project that uses a ST STM32F4-Discovery kit. Check the wiki for more info https://github.com/karlyamashita/CANable_USB_CAN/wiki
 
 > Read the wiki for more information on the original project and the CAN-X CAN bus analyzer software at this link https://github.com/karlyamashita/USB_to_CAN/wiki
@@ -13,7 +13,7 @@ CANable_STM32F072C8 CAN bus interface source code for use with STM32F072C8. The 
     * https://www.aliexpress.us/item/3256808639155688.html
 
 ---
-
+### Documentation
 Check out the wiki for more information https://github.com/karlyamashita/CANable__STM32F072C8/wiki
 
 
