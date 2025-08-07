@@ -23,7 +23,7 @@ void CAN_SetFilter(CAN_MsgStruct *msg)
 	sFilterConfig.FilterMaskIdHigh       = 0x0000;
 	sFilterConfig.FilterMaskIdLow        = 0x0000;
 	sFilterConfig.FilterFIFOAssignment   = CAN_FILTER_FIFO0;
-	sFilterConfig.FilterActivation       = ENABLE;
+	sFilterConfig.FilterActivation       = CAN_FILTER_ENABLE;
 
 	if(HAL_CAN_ConfigFilter(msg->hcan, &sFilterConfig) != HAL_OK)
 	{

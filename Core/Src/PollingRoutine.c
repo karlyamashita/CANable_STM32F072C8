@@ -162,6 +162,7 @@ void CAN_Parse(CAN_MsgStruct *msg)
 	if(CAN_DataAvailable(msg))
 	{
 		CAN_to_USB_Send(msg, CAN1_NODE);
+		memset(msg->msgToParse->data, 0, 8); // clear the data buffer at this queue index
 	}
 }
 
