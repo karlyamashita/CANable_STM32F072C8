@@ -23,6 +23,8 @@ void USB_to_CAN_Send(CAN_MsgStruct *msg, uint8_t *data)
 	// copy usb data to CAN structure
 	memcpy(&usbCanStruct.array.data, data, CAN_DATA_SIZE);
 
+	ptr->header.IDE = usbCanStruct.msgBytes.IDE;
+
 	if(usbCanStruct.msgBytes.IDE == CAN_ID_STD)
 	{
 		ptr->header.StdId = usbCanStruct.msgBytes.ArbId;
