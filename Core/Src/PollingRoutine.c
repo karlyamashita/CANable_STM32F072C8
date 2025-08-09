@@ -44,7 +44,7 @@ const char* Hardware = "P_CAN 0.7e";
 #ifdef CANABLE_V1_0_PRO
 const char* Hardware = "CANable V1.0 Pro";
 #endif
-const char* Version = "CANable v3.0.1"; // FW version
+const char* Version = "v3.0.1"; // FW version
 
 
 #define CAN_RX_QUEUE_SIZE 8
@@ -187,7 +187,7 @@ void APB1_Frequency_Get(void)
 	char str[16] = {0};
 	freq = HAL_RCC_GetPCLK1Freq();
 
-	sprintf(str, "APB1 %ld", freq);
+	sprintf(str, "%ld", freq);
 	SendStringInfo(CMD_FREQUENCY, str);
 }
 
