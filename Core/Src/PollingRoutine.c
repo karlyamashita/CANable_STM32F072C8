@@ -122,15 +122,19 @@ void USB_Parse(USB_MsgStruct *msg)
 			break;
 		case CMD_HARDWARE:
 			SendStringInfo(CMD_HARDWARE, (char*)Hardware);
+			status = -1;
 			break;
 		case CMD_VERSION:
 			SendStringInfo(CMD_VERSION, (char*)Version);
+			status = -1;
 			break;
 		case CMD_FREQUENCY:
 			APB1_Frequency_Get();
+			status = -1;
 			break;
 		case CMD_CAN_BTR:
 			CAN_BTR_Get(&can_msg);
+			status = -1;
 			break;
 		case CMD_CAN_MODE:
 			status = CAN_Mode_Set(msg->msgToParse->Status.data);
@@ -196,7 +200,7 @@ int CAN_BTR_Set(CAN_MsgStruct *msg, uint8_t *data)
 	HAL_StatusTypeDef hal_status;
 	uint32_t btrValue = 0;
 
-	btrValue = data[1] << 24 | data[2] << 16 | data[3] << 8 | data[4]; // parse the BTR data
+	btrValue = data[0] << 24 | data[1] << 16 | data[2] << 8 | data[3]; // parse the BTR data
 
 	// some of these snippets were copied from HAL_CAN_Init()
 	HAL_CAN_DeInit(msg->hcan);
@@ -225,8 +229,7 @@ void SendStringInfo(uint8_t cmd, char *msg)
 {
 	USB_Data_t usb_data = {0};
 
-	sprintf((char*)usb_data.Status.data, msg);
-	strcat((char*)usb_data.Status.data, "\r\n");
+	sprintf((char*)usb_data.Status.data, "%s\r\n", msg);
 
 	usb_data.Status.id = cmd;
 	usb_data.Status.size = strlen((char*)usb_data.Status.data);
