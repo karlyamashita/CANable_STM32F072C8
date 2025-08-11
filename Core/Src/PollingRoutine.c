@@ -58,6 +58,9 @@ const char* Hardware = "P_CAN 0.7e";
 #ifdef CANABLE_V1_0_PRO
 const char* Hardware = "CANable V1.0 Pro";
 #endif
+#ifdef JHOINRCH
+const char* Hardware = "Jhoinrch";
+#endif
 const char* Version = "v3.0.1"; // FW version
 
 
