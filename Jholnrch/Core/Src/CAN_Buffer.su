@@ -1,0 +1,6 @@
+../Core/Src/CAN_Buffer.c:10:5:CAN_SendMessage	24	static
+../Core/Src/CAN_Buffer.c:33:5:CAN_AddTxBuffer	24	static
+../Core/Src/CAN_Buffer.c:67:6:CAN_DataAvailable	16	static
+../Core/Src/CAN_Buffer.c:79:6:CAN_GetBusActivity	16	static
+../Core/Src/CAN_Buffer.c:84:6:CAN_ClearBusActivity	16	static
+../Core/Src/CAN_Buffer.c:94:6:MsgCopy	24	static

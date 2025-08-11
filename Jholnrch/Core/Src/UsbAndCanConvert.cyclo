@@ -1,0 +1,2 @@
+../Core/Src/UsbAndCanConvert.c:16:6:USB_to_CAN_Send	2
+../Core/Src/UsbAndCanConvert.c:46:6:CAN_to_USB_Send	2

@@ -81,12 +81,13 @@ void PollingInit(void)
 
 	// blink the green LED 3 times to indicate it is up and running.
 	TimerCallbackRegisterOnly(&timerCallback, LED_Green_Toggle);
-	TimerCallbackRepetitionStart(&timerCallback, LED_Green_Toggle, 500, 6);
-	TimerCallbackRegister2nd(&timerCallback, LED_Blue_Toggle, LED_Green_Off); // be sure LED goes to off state
+	TimerCallbackRepetitionStart(&timerCallback, LED_Green_Toggle, 100, 6);
+	TimerCallbackRegister2nd(&timerCallback, LED_Green_Toggle, LED_Green_Off); // be sure LED goes to off state
 
 	TimerCallbackRegisterOnly(&timerCallback, LED_Blue_Toggle);
+	TimerCallbackRepetitionStart(&timerCallback, LED_Blue_Toggle, 100, 6);
 	TimerCallbackRegister2nd(&timerCallback, LED_Blue_Toggle, LED_Blue_Off); // be sure LED goes to off state
-#if defined (P_CAN_07e) || defined (CANABLE_V1_0_PRO)
+#if defined (P_CAN_07e) || defined (CANABLE_V1_0_PRO) || defined (JHOINRCH)
 	LED_Green(false);
 	LED_Blue(false);
 #endif

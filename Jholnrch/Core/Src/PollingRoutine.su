@@ -1,0 +1,8 @@
+../Core/Src/PollingRoutine.c:78:6:PollingInit	8	static
+../Core/Src/PollingRoutine.c:95:6:PollingRoutine	8	static
+../Core/Src/PollingRoutine.c:108:6:USB_Parse	280	static
+../Core/Src/PollingRoutine.c:164:6:CAN_Parse	16	static
+../Core/Src/PollingRoutine.c:172:6:CAN_BTR_Get	288	static
+../Core/Src/PollingRoutine.c:188:6:APB1_Frequency_Get	32	static
+../Core/Src/PollingRoutine.c:198:5:CAN_BTR_Set	32	static
+../Core/Src/PollingRoutine.c:228:6:SendStringInfo	280	static
