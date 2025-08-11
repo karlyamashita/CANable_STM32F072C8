@@ -1,3 +1,0 @@
-../Core/Src/RingBuffer.c:14:6:RingBuff_Ptr_Reset	16	static
-../Core/Src/RingBuffer.c:23:5:RingBuff_Ptr_Input	24	static
-../Core/Src/RingBuffer.c:53:5:RingBuff_Ptr_Output	24	static

@@ -1,2 +1,0 @@
-../Core/Src/IRQ_Handler.c:12:6:HAL_CAN_RxFifo0MsgPendingCallback	32	static
-../Core/Src/IRQ_Handler.c:29:6:HAL_CAN_TxMailbox0CompleteCallback	16	static
