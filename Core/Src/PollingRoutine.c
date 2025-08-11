@@ -1,4 +1,18 @@
 /*
+  ******************************************************************************
+  * @attention
+  *
+  * Copyright (c) 2025 Karl Yamashita
+  * All rights reserved.
+  *
+  * This software is licensed under terms that can be found in the LICENSE file
+  * in the root directory of this software component.
+  * If no LICENSE file comes with this software, it is provided AS-IS.
+  *
+  ******************************************************************************
+ */
+
+/*
  * PollingRoutine.c
  *
  *  Created on: Oct 24, 2023
@@ -44,7 +58,7 @@ const char* Hardware = "P_CAN 0.7e";
 #ifdef CANABLE_V1_0_PRO
 const char* Hardware = "CANable V1.0 Pro";
 #endif
-const char* Version = "CANable v3.0.1"; // FW version
+const char* Version = "v3.0.1"; // FW version
 
 
 #define CAN_RX_QUEUE_SIZE 8
@@ -81,12 +95,13 @@ void PollingInit(void)
 
 	// blink the green LED 3 times to indicate it is up and running.
 	TimerCallbackRegisterOnly(&timerCallback, LED_Green_Toggle);
-	TimerCallbackRepetitionStart(&timerCallback, LED_Green_Toggle, 500, 6);
-	TimerCallbackRegister2nd(&timerCallback, LED_Blue_Toggle, LED_Green_Off); // be sure LED goes to off state
+	TimerCallbackRepetitionStart(&timerCallback, LED_Green_Toggle, 100, 6);
+	TimerCallbackRegister2nd(&timerCallback, LED_Green_Toggle, LED_Green_Off); // be sure LED goes to off state
 
 	TimerCallbackRegisterOnly(&timerCallback, LED_Blue_Toggle);
+	TimerCallbackRepetitionStart(&timerCallback, LED_Blue_Toggle, 100, 6);
 	TimerCallbackRegister2nd(&timerCallback, LED_Blue_Toggle, LED_Blue_Off); // be sure LED goes to off state
-#if defined (P_CAN_07e) || defined (CANABLE_V1_0_PRO)
+#if defined (P_CAN_07e) || defined (CANABLE_V1_0_PRO) || defined (JHOINRCH)
 	LED_Green(false);
 	LED_Blue(false);
 #endif
@@ -122,15 +137,19 @@ void USB_Parse(USB_MsgStruct *msg)
 			break;
 		case CMD_HARDWARE:
 			SendStringInfo(CMD_HARDWARE, (char*)Hardware);
+			status = -1;
 			break;
 		case CMD_VERSION:
 			SendStringInfo(CMD_VERSION, (char*)Version);
+			status = -1;
 			break;
 		case CMD_FREQUENCY:
 			APB1_Frequency_Get();
+			status = -1;
 			break;
 		case CMD_CAN_BTR:
 			CAN_BTR_Get(&can_msg);
+			status = -1;
 			break;
 		case CMD_CAN_MODE:
 			status = CAN_Mode_Set(msg->msgToParse->Status.data);
@@ -188,7 +207,7 @@ void APB1_Frequency_Get(void)
 	char str[16] = {0};
 	freq = HAL_RCC_GetPCLK1Freq();
 
-	sprintf(str, "APB1 %ld", freq);
+	sprintf(str, "%ld", freq);
 	SendStringInfo(CMD_FREQUENCY, str);
 }
 
@@ -197,7 +216,7 @@ int CAN_BTR_Set(CAN_MsgStruct *msg, uint8_t *data)
 	HAL_StatusTypeDef hal_status;
 	uint32_t btrValue = 0;
 
-	btrValue = data[1] << 24 | data[2] << 16 | data[3] << 8 | data[4]; // parse the BTR data
+	btrValue = data[0] << 24 | data[1] << 16 | data[2] << 8 | data[3]; // parse the BTR data
 
 	// some of these snippets were copied from HAL_CAN_Init()
 	HAL_CAN_DeInit(msg->hcan);
@@ -226,8 +245,7 @@ void SendStringInfo(uint8_t cmd, char *msg)
 {
 	USB_Data_t usb_data = {0};
 
-	sprintf((char*)usb_data.Status.data, msg);
-	strcat((char*)usb_data.Status.data, "\r\n");
+	sprintf((char*)usb_data.Status.data, "%s\r\n", msg);
 
 	usb_data.Status.id = cmd;
 	usb_data.Status.size = strlen((char*)usb_data.Status.data);
