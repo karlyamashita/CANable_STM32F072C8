@@ -22,4 +22,5 @@ This device does not support FDCAN. If you want to see a project on FDCAN that u
 ### Documentation
 Check out the wiki for more information https://github.com/karlyamashita/CANable__STM32F072C8/wiki
 
-
+### CAN bus analyzer software
+[CAN-X CDC](https://github.com/karlyamashita/CAN-X) has been updated to work with these devices. There are some pending issues but so far sending and receiving CAN messages works.
