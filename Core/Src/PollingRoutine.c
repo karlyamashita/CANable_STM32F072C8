@@ -61,7 +61,7 @@ const char* Hardware = "CANable V1.0 Pro";
 #ifdef JHOINRCH
 const char* Hardware = "Jhoinrch";
 #endif
-const char* Version = "v3.0.1"; // FW version
+const char* Version = "v3.0.1a"; // FW version
 
 
 #define CAN_RX_QUEUE_SIZE 8
@@ -127,6 +127,7 @@ void USB_Parse(USB_MsgStruct *msg)
 {
 	int status = -1;
 	USB_Data_t usbData = {0};
+	char retStr[128] = {0};
 
 	if(USB_DataAvailable(msg))
 	{
@@ -138,20 +139,28 @@ void USB_Parse(USB_MsgStruct *msg)
 		case CMD_BAUD:
 			status = CAN_BTR_Set(&can_msg, msg->msgToParse->Status.data);
 			break;
-		case CMD_HARDWARE:
+		case CMD_INFO:
 			SendStringInfo(CMD_HARDWARE, (char*)Hardware);
+			SendStringInfo(CMD_VERSION, (char*)Version);
+			APB1_Frequency_Get(retStr);
+			SendStringInfo(CMD_FREQUENCY, retStr);
+			status = -1;
+			break;
+		case CMD_CAN_BTR:
+			CAN_BTR_Get(&can_msg);
 			status = -1;
 			break;
 		case CMD_VERSION:
 			SendStringInfo(CMD_VERSION, (char*)Version);
 			status = -1;
 			break;
-		case CMD_FREQUENCY:
-			APB1_Frequency_Get();
+		case CMD_HARDWARE:
+			SendStringInfo(CMD_HARDWARE, (char*)Hardware);
 			status = -1;
 			break;
-		case CMD_CAN_BTR:
-			CAN_BTR_Get(&can_msg);
+		case CMD_FREQUENCY:
+			APB1_Frequency_Get(retStr);
+			SendStringInfo(CMD_FREQUENCY, retStr);
 			status = -1;
 			break;
 		case CMD_CAN_MODE:
@@ -204,14 +213,13 @@ void CAN_BTR_Get(CAN_MsgStruct *msg)
 	USB_AddTxBuffer(&usb_msg, &usb_data);
 }
 
-void APB1_Frequency_Get(void)
+void APB1_Frequency_Get(char *retStr)
 {
 	uint32_t freq;
-	char str[16] = {0};
+
 	freq = HAL_RCC_GetPCLK1Freq();
 
-	sprintf(str, "%ld", freq);
-	SendStringInfo(CMD_FREQUENCY, str);
+	sprintf(retStr, "%ld", freq);
 }
 
 int CAN_BTR_Set(CAN_MsgStruct *msg, uint8_t *data)
