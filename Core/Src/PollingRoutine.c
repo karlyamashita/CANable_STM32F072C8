@@ -42,6 +42,9 @@
 		LED Green on PA0,
 		LED Blue on PA1, both active low.
 
+
+		v 3.0.1b - Returns BTR value with CMD_INFO
+
  */
 
 
@@ -61,7 +64,7 @@ const char* Hardware = "CANable V1.0 Pro";
 #ifdef JHOINRCH
 const char* Hardware = "Jhoinrch";
 #endif
-const char* Version = "v3.0.1a"; // FW version
+const char* Version = "v3.0.1b"; // FW version
 
 
 #define CAN_RX_QUEUE_SIZE 8
@@ -144,6 +147,7 @@ void USB_Parse(USB_MsgStruct *msg)
 			SendStringInfo(CMD_VERSION, (char*)Version);
 			APB1_Frequency_Get(retStr);
 			SendStringInfo(CMD_FREQUENCY, retStr);
+			CAN_BTR_Get(&can_msg);
 			status = -1;
 			break;
 		case CMD_CAN_BTR:
