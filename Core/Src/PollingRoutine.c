@@ -44,6 +44,7 @@
 
 
 		v 3.0.1b - Returns BTR value with CMD_INFO
+		v 3.0.1c - Update CAN tsegx values to (13,2) @ 500Kbit/s. Old tsegx values (10,5) still was 500Kbit/s but BTR register value did not match CAN-X lookup table values.
 
  */
 
@@ -64,7 +65,7 @@ const char* Hardware = "CANable V1.0 Pro";
 #ifdef JHOINRCH
 const char* Hardware = "Jhoinrch";
 #endif
-const char* Version = "v3.0.1b"; // FW version
+const char* Version = "v3.0.1c"; // FW version
 
 
 #define CAN_RX_QUEUE_SIZE 8

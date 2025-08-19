@@ -2,8 +2,8 @@
 CAD.formats=
 CAD.pinconfig=
 CAD.provider=
-CAN.BS1=CAN_BS1_10TQ
-CAN.BS2=CAN_BS2_5TQ
+CAN.BS1=CAN_BS1_13TQ
+CAN.BS2=CAN_BS2_2TQ
 CAN.CalculateBaudRate=500000
 CAN.CalculateTimeBit=2000
 CAN.CalculateTimeQuantum=125.0
