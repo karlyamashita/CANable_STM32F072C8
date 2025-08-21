@@ -149,24 +149,19 @@ void USB_Parse(USB_MsgStruct *msg)
 			APB1_Frequency_Get(retStr);
 			SendStringInfo(CMD_FREQUENCY, retStr);
 			CAN_BTR_Get(&can_msg);
-			status = -1;
 			break;
 		case CMD_CAN_BTR:
 			CAN_BTR_Get(&can_msg);
-			status = -1;
 			break;
 		case CMD_VERSION:
 			SendStringInfo(CMD_VERSION, (char*)Version);
-			status = -1;
 			break;
 		case CMD_HARDWARE:
 			SendStringInfo(CMD_HARDWARE, (char*)Hardware);
-			status = -1;
 			break;
 		case CMD_FREQUENCY:
 			APB1_Frequency_Get(retStr);
 			SendStringInfo(CMD_FREQUENCY, retStr);
-			status = -1;
 			break;
 		case CMD_CAN_MODE:
 			status = CAN_Mode_Set(msg->msgToParse->Status.data);
