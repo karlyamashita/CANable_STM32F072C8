@@ -27,6 +27,7 @@ void LED_Green_Toggle(void)
 {
 	HAL_GPIO_TogglePin(LED_0_GPIO_Port, LED_0_Pin);
 	HAL_GPIO_TogglePin(LED_B0_GPIO_Port, LED_B0_Pin); // Jhoinrch
+	HAL_GPIO_TogglePin(LED_B2_GPIO_Port, LED_B2_Pin); // Innomaker
 }
 
 // RX
@@ -34,6 +35,12 @@ void LED_Blue_Toggle(void)
 {
 	HAL_GPIO_TogglePin(LED_1_GPIO_Port, LED_1_Pin);
 	HAL_GPIO_TogglePin(LED_B1_GPIO_Port, LED_B1_Pin); // Jhoinrch
+	HAL_GPIO_TogglePin(LED_B10_GPIO_Port, LED_B10_Pin); // Innomaker
+}
+
+void LED_InnomakerStatus(void)
+{
+	HAL_GPIO_TogglePin(LED_B11_GPIO_Port, LED_B11_Pin); // Innomaker status LED
 }
 
 void LED_Green(bool state)
