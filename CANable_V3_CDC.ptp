@@ -3,7 +3,7 @@ VERSION
 
 COMMSETTINGS
 0
-COM8
+COM10
 COM6
 115200
 2
@@ -108,34 +108,27 @@ CAN Mode Silent
 
 SEND
 12
-CAN Mode Silent + Loopback
-30 00 00 00 03
-0
-5
-
-SEND
-13
 Baud 500k
 95 00 00 00 00 1C 00 05
 0
 5
 
 SEND
-14
+13
 Baud 125k
 95 00 00 00 00 1C 00 17
 0
 5
 
 SEND
-15
+14
 Baud 100k
 95 00 00 00 00 1C 00 1D
 0
 5
 
 SEND
-16
+15
 baud test
 95 00 00 00 00 49 00 05
 0

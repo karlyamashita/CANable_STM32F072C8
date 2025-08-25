@@ -45,6 +45,10 @@
 
 		v 3.0.1b - Returns BTR value with CMD_INFO
 		v 3.0.1c - Update CAN tsegx values to (13,2) @ 500Kbit/s. Old tsegx values (10,5) still was 500Kbit/s but BTR register value did not match CAN-X lookup table values.
+		v 3.0.2 - Added Innomaker settings
+		v 3.0.3 - Removed CMD_CAN_MODE command and CAN_Mode.c/h since CMD_CAN_BTR also sets the CAN mode.
+
+
 
  */
 
@@ -68,7 +72,7 @@ const char* Hardware = "Jhoinrch";
 #ifdef Innomaker_USB2CAN
 const char* Hardware = "Innomaker USB2CAN";
 #endif
-const char* Version = "v3.0.1c"; // FW version
+const char* Version = "v3.0.3"; // FW version
 
 
 #define CAN_RX_QUEUE_SIZE 8
@@ -170,9 +174,11 @@ void USB_Parse(USB_MsgStruct *msg)
 			APB1_Frequency_Get(retStr);
 			SendStringInfo(CMD_FREQUENCY, retStr);
 			break;
+			/*
 		case CMD_CAN_MODE:
 			status = CAN_Mode_Set(msg->msgToParse->Status.data);
 			break;
+			*/
 		default:
 			status = 1;
 			break;

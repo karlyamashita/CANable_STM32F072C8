@@ -21,7 +21,7 @@
 
 
 #include "main.h"
-
+/*
 int CAN_Mode_Set(uint8_t *data)
 {
 	HAL_StatusTypeDef hal_status;
@@ -45,7 +45,7 @@ int CAN_Mode_Set(uint8_t *data)
 	{
 		mode = CAN_MODE_SILENT;
 	}
-	else if(data[0] == 2)
+	else if(data[0] == 3)
 	{
 		mode = CAN_MODE_SILENT_LOOPBACK;
 	}
@@ -73,3 +73,4 @@ int CAN_Mode_Set(uint8_t *data)
 
 	return hal_status;
 }
+*/
