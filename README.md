@@ -19,7 +19,7 @@ CANable_STM32F072C8 CAN bus interface source code for use with STM32F072C8. The 
     * https://www.aliexpress.us/item/3256808639155688.html
 
 ### FDCAN support
-This device does not support FDCAN. If you want to see a project on FDCAN that uses a STM32G431, then check out this project https://github.com/karlyamashita/CANable_STM32G431C8
+These devices do not support FDCAN. I am working on CANable_STM32G431xx project to support the STM32G431 and STm32G0Bx series.
 
 ---
 ### Documentation
