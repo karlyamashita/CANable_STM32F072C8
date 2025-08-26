@@ -41,10 +41,12 @@ typedef struct
 	CanRxMsgTypeDef *msgToParse; // pointer to latest queue
 	RING_BUFF_STRUCT rxPtr; // queue pointer
 	bool canBusActive; // used for CAN bus activity to keep STM32 from going to sleep.
+	uint32_t rxCounter; // for debugging
 	// Tx
 	CanTxMsgTypeDef *txQueue;
 	uint32_t txQueueSize;
 	RING_BUFF_STRUCT txPtr; // queue pointer
+	uint32_t txCounter; // for debugging
 }CAN_MsgStruct;
 
 int CAN_SendMessage(CAN_MsgStruct *msg);

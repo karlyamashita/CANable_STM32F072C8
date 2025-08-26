@@ -33,6 +33,7 @@ int CAN_SendMessage(CAN_MsgStruct *msg)
 		if (can_status == HAL_OK)
 		{
 			RingBuff_Ptr_Output(&msg->txPtr, msg->txQueueSize); // increment queue ptr
+			msg->txCounter += 1;
 		}
 	}
 

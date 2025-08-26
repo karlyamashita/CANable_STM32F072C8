@@ -42,10 +42,12 @@ void CAN_SetFilter(CAN_MsgStruct *msg)
 	{
 		Error_Handler(); // Error_Handler should never be called, so we won't worry about handling these errors.
 	}
+
 	if(HAL_CAN_Start(msg->hcan) != HAL_OK)
 	{
 		Error_Handler();
 	}
+
 	if (HAL_CAN_ActivateNotification(msg->hcan, CAN_IT_RX_FIFO0_MSG_PENDING | CAN_IT_TX_MAILBOX_EMPTY) != HAL_OK)
 	{
 		Error_Handler();
