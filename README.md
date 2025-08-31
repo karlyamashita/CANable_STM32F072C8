@@ -11,8 +11,6 @@ CANable_STM32F072C8 CAN bus interface source code for use with STM32F072C8. The 
     * https://amzn.to/3HpTOA6
 * Jhoinrch
     * https://amzn.to/45cS3PZ
-* Innomaker USB2CAN
-    * https://amzn.to/4mu9QYW 
 * P_CAN 0.7e ( the name on the PCB )
     * https://www.aliexpress.us/item/3256806155920255.html 
 * CANAble V1.0 Pro
