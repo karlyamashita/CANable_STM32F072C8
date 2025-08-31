@@ -69,9 +69,6 @@ const char* Hardware = "CANable V1.0 Pro";
 #ifdef JHOINRCH
 const char* Hardware = "Jhoinrch";
 #endif
-#ifdef Innomaker_USB2CAN
-const char* Hardware = "Innomaker USB2CAN";
-#endif
 const char* Version = "v3.0.3"; // FW version
 
 
