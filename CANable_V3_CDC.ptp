@@ -52,15 +52,15 @@ Extended 0x10802040
 
 SEND
 4
-CAN BTR
-91
+Info
+90
 0
 5
 
 SEND
 5
-Info
-90
+CAN BTR
+91
 0
 5
 

@@ -69,7 +69,7 @@ const char* Hardware = "CANable V1.0 Pro";
 #ifdef JHOINRCH
 const char* Hardware = "Jhoinrch";
 #endif
-#ifdef Innomaker_USB2CAN
+#ifdef INNOMAKER_USB2CAN
 const char* Hardware = "Innomaker USB2CAN";
 #endif
 const char* Version = "v3.0.3"; // FW version
@@ -115,7 +115,7 @@ void PollingInit(void)
 	TimerCallbackRegisterOnly(&timerCallback, LED_Blue_Toggle);
 	TimerCallbackRepetitionStart(&timerCallback, LED_Blue_Toggle, 100, 6);
 	TimerCallbackRegister2nd(&timerCallback, LED_Blue_Toggle, LED_Blue_Off); // be sure LED goes to off state
-#ifdef Innomaker_USB2CAN
+#ifdef INNOMAKER_USB2CAN
 	TimerCallbackRegisterOnly(&timerCallback, LED_InnomakerStatus);
 	TimerCallbackTimerStart(&timerCallback, LED_InnomakerStatus, 1000, TIMER_REPEAT);
 #endif
