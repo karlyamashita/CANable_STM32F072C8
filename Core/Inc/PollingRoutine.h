@@ -63,5 +63,7 @@ void CAN_BTR_Get(CAN_MsgStruct *hcan);
 int CAN_BTR_Set(CAN_MsgStruct *hcan, uint8_t *data);
 void APB1_Frequency_Get(char *retStr);
 void SendStringInfo(uint8_t cmd, char *msg);
+void InnoMakerReady(void);
+
 
 #endif /* INC_POLLINGROUTINE_H_ */

@@ -47,6 +47,9 @@
 		v 3.0.1c - Update CAN tsegx values to (13,2) @ 500Kbit/s. Old tsegx values (10,5) still was 500Kbit/s but BTR register value did not match CAN-X lookup table values.
 		v 3.0.2 - Added Innomaker settings
 		v 3.0.3 - Removed CMD_CAN_MODE command and CAN_Mode.c/h since CMD_CAN_BTR also sets the CAN mode.
+		v 3.0.4 - InnoMaker USB2CAN interface has a header with USART1 pins on the PCB. Currently this FW will just send a "InnoMaker Ready" message just for the sake of knowing the USART works.
+					But this opens up a lot of other useful things it can do like monitor a GPS module. It also has I2C header (yet to test), so maybe monitor a TMP101 temperature sensor.
+					All this data can then be sent out on the CAN bus or the PC.
 
 
 
@@ -72,7 +75,7 @@ const char* Hardware = "Jhoinrch";
 #ifdef INNOMAKER_USB2CAN
 const char* Hardware = "Innomaker USB2CAN";
 #endif
-const char* Version = "v3.0.3"; // FW version
+const char* Version = "v3.0.4"; // FW version
 
 
 #define CAN_RX_QUEUE_SIZE 8
@@ -103,6 +106,24 @@ USB_MsgStruct usb_msg =
 	.txQueueSize = USB_QUEUE_SIZE
 };
 
+#ifdef INNOMAKER_USB2CAN
+#define UART1_DMA_RX_QUEUE_SIZE 10 // queue size
+#define UART1_DMA_TX_QUEUE_SIZE 4
+
+UART_DMA_Data uart1_dmaDataRxQueue[UART1_DMA_RX_QUEUE_SIZE] = {0};
+UART_DMA_Data uart1_dmaDataTxQueue[UART1_DMA_TX_QUEUE_SIZE] = {0};
+
+UART_DMA_Struct_t uart1_msg =
+{
+	.huart = &huart1,
+	.rx.queueSize = UART1_DMA_RX_QUEUE_SIZE,
+	.rx.msgQueue = uart1_dmaDataRxQueue,
+	.tx.queueSize = UART1_DMA_TX_QUEUE_SIZE,
+	.tx.msgQueue = uart1_dmaDataTxQueue,
+	.dma.dmaPtr.SkipOverFlow = true
+};
+#endif
+
 void PollingInit(void)
 {
 	CAN_SetFilter(&can_msg);
@@ -116,8 +137,12 @@ void PollingInit(void)
 	TimerCallbackRepetitionStart(&timerCallback, LED_Blue_Toggle, 100, 6);
 	TimerCallbackRegister2nd(&timerCallback, LED_Blue_Toggle, LED_Blue_Off); // be sure LED goes to off state
 #ifdef INNOMAKER_USB2CAN
+	UART_DMA_EnableRxInterruptIdle(&uart1_msg);
+
 	TimerCallbackRegisterOnly(&timerCallback, LED_InnomakerStatus);
 	TimerCallbackTimerStart(&timerCallback, LED_InnomakerStatus, 1000, TIMER_REPEAT);
+
+	InnoMakerReady();
 #endif
 #if defined (P_CAN_07e) || defined (CANABLE_V1_0_PRO) || defined (JHOINRCH)
 	LED_Green(false);
@@ -277,3 +302,12 @@ void SendStringInfo(uint8_t cmd, char *msg)
 	USB_AddTxBuffer(&usb_msg, &usb_data);
 }
 
+void InnoMakerReady(void)
+{
+	char str[UART_DMA_QUEUE_DATA_SIZE] = {0};
+
+	sprintf(str, "InnoMaker Ready");
+
+	UART_DMA_NotifyUser(&uart1_msg, str, strlen(str), true);
+
+}

@@ -49,16 +49,19 @@ extern "C" {
 #include "CAN_Mode.h"
 #include "GPIO_Handler.h"
 #include "TimerCallback.h"
+#include "UART_DMA_Idle_Circular_Drv_STM32.h"
 #include "USB_Buffer.h"
 #include "UsbAndCanConvert.h"
 
 #include "PollingRoutine.h"
 
 extern CAN_HandleTypeDef hcan;
+extern UART_HandleTypeDef huart1;
 
 extern TimerCallbackStruct timerCallback;
 extern USB_MsgStruct usb_msg;
 extern CAN_MsgStruct can_msg;
+extern UART_DMA_Struct_t uart1_msg;
 
 /* USER CODE END Includes */
 
