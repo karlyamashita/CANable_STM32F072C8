@@ -50,7 +50,7 @@
 		v 3.0.4 - InnoMaker USB2CAN interface has a header with USART1 pins on the PCB. Currently this FW will just send a "InnoMaker Ready" message just for the sake of knowing the USART works.
 					But this opens up a lot of other useful things it can do like monitor a GPS module. It also has I2C header (yet to test), so maybe monitor a TMP101 temperature sensor.
 					All this data can then be sent out on the CAN bus or the PC.
-
+        v 3.0.5 - Add CMD_UID to get 96 bit UID
 
 
  */
@@ -75,7 +75,7 @@ const char* Hardware = "Jhoinrch";
 #ifdef INNOMAKER_USB2CAN
 const char* Hardware = "Innomaker USB2CAN";
 #endif
-const char* Version = "v3.0.4"; // FW version
+const char* Version = "v3.0.5"; // FW version
 
 
 #define CAN_RX_QUEUE_SIZE 8
@@ -199,11 +199,10 @@ void USB_Parse(USB_MsgStruct *msg)
 			APB1_Frequency_Get(retStr);
 			SendStringInfo(CMD_FREQUENCY, retStr);
 			break;
-			/*
-		case CMD_CAN_MODE:
-			status = CAN_Mode_Set(msg->msgToParse->Status.data);
+		case CMD_UID:
+			STM32_UID_Get(retStr);
+			SendStringInfo(CMD_UID, retStr);
 			break;
-			*/
 		default:
 			status = 1;
 			break;

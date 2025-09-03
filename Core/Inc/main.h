@@ -40,18 +40,21 @@ extern "C" {
 #include <math.h>
 #include <errno.h>
 #include <ctype.h>
+#include <inttypes.h>
 #define Nop() asm(" NOP ")
 
+#include "ErrorStatus.h"
 #include "ProtocolCommands.h"
 #include "RingBuffer.h"
 #include "CAN_Buffer.h"
 #include "CAN_Filter.h"
 #include "CAN_Mode.h"
 #include "GPIO_Handler.h"
+#include "STM32_UID.h"
 #include "TimerCallback.h"
 #include "UART_DMA_Idle_Circular_Drv_STM32.h"
-#include "USB_Buffer.h"
-#include "UsbAndCanConvert.h"
+#include "USB_CDC_Buffer.h"
+#include "USB_CAN_Convert.h"
 
 #include "PollingRoutine.h"
 

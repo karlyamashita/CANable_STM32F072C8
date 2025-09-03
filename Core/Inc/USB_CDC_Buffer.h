@@ -12,8 +12,8 @@
   ******************************************************************************
  */
 
-#ifndef USB_BUFFER_H
-#define USB_BUFFER_H
+#ifndef USB_CDC_BUFFER_H
+#define USB_CDC_BUFFER_H
 
 
 
@@ -56,4 +56,4 @@ void USB_AddTxBuffer(USB_MsgStruct *msg, USB_Data_t *data);
 void USB_AddRxBuffer(USB_MsgStruct *msg, uint8_t *data, uint32_t size);
 uint8_t USB_DataAvailable(USB_MsgStruct *msg);
 
-#endif // USB_BUFFER_H
+#endif // USB_CDC_BUFFER_H

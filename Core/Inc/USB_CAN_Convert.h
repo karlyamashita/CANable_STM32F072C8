@@ -12,8 +12,8 @@
   ******************************************************************************
  */
 
-#ifndef CONVERT_USB_AND_CAN_H
-#define CONVERT_USB_AND_CAN_H
+#ifndef USB_CAN_CONVERT_H
+#define USB_CAN_CONVERT_H
 
 
 // Node defines
@@ -73,5 +73,5 @@ typedef	union UsbCanStruct {
 void USB_to_CAN_Send(CAN_MsgStruct *msg, uint8_t *data);
 void CAN_to_USB_Send(CAN_MsgStruct *msg, uint8_t node);
 
-#endif // CONVERT_USB_AND_CAN_H
+#endif // USB_CAN_CONVERT_H
 
