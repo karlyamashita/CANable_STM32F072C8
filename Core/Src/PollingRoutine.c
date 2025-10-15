@@ -51,6 +51,7 @@
 					But this opens up a lot of other useful things it can do like monitor a GPS module. It also has I2C header (yet to test), so maybe monitor a TMP101 temperature sensor.
 					All this data can then be sent out on the CAN bus or the PC.
         v 3.0.5 - Add CMD_UID to get 96 bit UID
+		v 3.0.6 - Add INNOMAKER_USB2CANX2 define. It's configurations are the same as INNOMAKER_USB2CAN except for Hardware name.
 
 
  */
@@ -75,7 +76,10 @@ const char* Hardware = "Jhoinrch";
 #ifdef INNOMAKER_USB2CAN
 const char* Hardware = "Innomaker USB2CAN";
 #endif
-const char* Version = "v3.0.5"; // FW version
+#ifdef INNOMAKER_USB2CANX2
+const char* Hardware = "Innomaker USB2CAN-X2";
+#endif
+const char* Version = "v3.0.6"; // FW version
 
 
 #define CAN_RX_QUEUE_SIZE 8
@@ -136,13 +140,17 @@ void PollingInit(void)
 	TimerCallbackRegisterOnly(&timerCallback, LED_Blue_Toggle);
 	TimerCallbackRepetitionStart(&timerCallback, LED_Blue_Toggle, 100, 6);
 	TimerCallbackRegister2nd(&timerCallback, LED_Blue_Toggle, LED_Blue_Off); // be sure LED goes to off state
-#ifdef INNOMAKER_USB2CAN
+#if defined (INNOMAKER_USB2CAN)
 	UART_DMA_EnableRxInterruptIdle(&uart1_msg);
 
 	TimerCallbackRegisterOnly(&timerCallback, LED_InnomakerStatus);
 	TimerCallbackTimerStart(&timerCallback, LED_InnomakerStatus, 1000, TIMER_REPEAT);
 
 	InnoMakerReady();
+#endif
+#if defined (INNOMAKER_USB2CANX2)
+	TimerCallbackRegisterOnly(&timerCallback, LED_InnomakerStatus);
+	TimerCallbackTimerStart(&timerCallback, LED_InnomakerStatus, 1000, TIMER_REPEAT);
 #endif
 #if defined (P_CAN_07e) || defined (CANABLE_V1_0_PRO) || defined (JHOINRCH)
 	LED_Green(false);
