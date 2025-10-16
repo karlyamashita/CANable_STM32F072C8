@@ -16,7 +16,9 @@ CANable_STM32F072C8 CAN bus interface source code for use with STM32F072C8. The 
 * CANAble V1.0 Pro
     * https://www.aliexpress.us/item/3256808639155688.html
 * InnoMaker USB2CAN
-    * Waiting for support. 
+    * https://amzn.to/43gnPKl
+* InnoMaker USB2CAN-X2
+    * https://amzn.to/3JbrjqF
 
 ### FDCAN support
 These devices do not support FDCAN. I am working on CANable_STM32G431xx project to support the STM32G431 and STM32G0Bx series.
